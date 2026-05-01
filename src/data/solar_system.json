@@ -1,0 +1,34 @@
+{
+    "star": {
+    "name": "Солнце",
+
+    "age_years": 4.6,
+
+    "composition": {
+        "hydrogen_percent": 73.46,
+        "helium_percent": 24.85,
+        "oxygen_percent": 0.77,
+        "carbon_percent": 0.29,
+        "iron_percent": 0.16,
+        "other_percent": 0.47
+    },
+
+    "original_radius": 696340,
+    "model_radius": 69,
+
+    "mass_kg": 1.989e30,
+
+    "temperature_core_kelvin": 15700000,
+    "temperature_surface_kelvin": 5778,
+
+    "total_watts": 3.828e26,
+
+    "distance_in_au": 1,
+    "distance_in_million_km": 149.6,
+
+    "light_minutes": 8.317
+    },
+
+    
+    "planets": [] 
+}
