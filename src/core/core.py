@@ -7,15 +7,15 @@ from utils.data_reader import get_tab_name
 class CoreWindow(QTabWidget):
     def __init__(self):
         super().__init__()
-        self.current_language = "ru"
+        self.current_language = "en"
         
-        list_tabs = get_tab_name("EyeOfTheVoid/src/data/contatnts.json", self.current_language)
+        list_tabs = get_tab_name("EyeOfTheVoid/src/data/contants.json", self.current_language)
         
         self.showMaximized()
         self.setWindowTitle("Eye of the void")
         self.setWindowIcon(QIcon(QPixmap("EyeOfTheVoid/src/core/assets/images/icon.ico")))
         
-        self.title = Title()
+        self.title = Title(self.current_language)
         self.solar_system = SolarSystem()
         
         self.addTab(self.title, list_tabs[0])

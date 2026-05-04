@@ -3,12 +3,18 @@
         "tabs": [
             "Меню",
             "Солнечная система"
+        ],
+        "title": [
+            "Приветствуем, ученые!"
         ]
     },
     "en": {
         "tabs": [
             "Menu",
             "Solar system"
+        ],
+        "title": [
+            "Welcome, scientists!"
         ]
     }
 }
