@@ -30,3 +30,6 @@ class Title(QWidget):
     def update_content(self):
         lm.set_current_language()
         self.language_button.setText(lm.get_current_language())
+        
+        new_list_data = get_title_tab_data("EyeOfTheVoid/src/data/contants.json")
+        self.title.setText(new_list_data[0])
