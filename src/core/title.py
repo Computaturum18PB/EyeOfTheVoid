@@ -2,7 +2,7 @@ from PySide6.QtWidgets import QGridLayout, QLabel, QPushButton, QWidget
 from PySide6.QtGui import QFont
 from PySide6.QtCore import Slot
 from utils.data_reader import get_title_tab_data
-from utils.language_settings import language_master as lm
+from utils.language_settings import lm
 
 class Title(QWidget):
     def __init__(self):
@@ -21,10 +21,12 @@ class Title(QWidget):
         self.title.setWordWrap(True)
                   
         self.language_button = QPushButton(lm.get_current_language())
-        self.language_button.clicked.connect(lm.set_current_language)
+        self.language_button.clicked.connect(self.update_content)
         
         layout.addWidget(self.title, 1, 0)
         layout.addWidget(self.language_button, 0, 0)   
-        
-    def update_content(self, list_data):
-        self.title.setText(list_data[0 if lm.get_current_language() == "ru" else 1])
+    
+    @Slot()
+    def update_content(self):
+        lm.set_current_language()
+        self.language_button.setText(lm.get_current_language())

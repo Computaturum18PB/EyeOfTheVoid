@@ -1,5 +1,5 @@
 import json
-from utils.language_settings import language_master as lm
+from utils.language_settings import lm
 
 def read_file(path):
     with open(path, "r", encoding="utf-8") as file:
