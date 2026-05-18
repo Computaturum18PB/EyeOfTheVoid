@@ -26,11 +26,9 @@ def get_planets(path):
         data = json.load(file)
         match lm.get_current_language():
             case "English":
-                planets_obj = data["English"]["Planets"]
-                list_planets = list(planets_obj.values())  
+                list_planets = data["English"]["Planets"]  
             case "Русский":
                 list_planets = data["Русский"]["Планеты"]
-                list_planets = list(planets_obj.values())
         return list_planets
     
 def get_satellites(path):
@@ -50,9 +48,11 @@ def create_star(path):
     match lm.get_current_language():
         case "Русский":
             size = star_data["Модельный_радиус"]
+            color = star_data["Модельный_цвет"]
         case "English":
             size = star_data["Model_radius"]
-    return gl.GLScatterPlotItem(pos=[0, 0, 0], color=(1.0, 0.65, 0.0, 1.0), size=size)
+            color = star_data["Model_color"]
+    return gl.GLScatterPlotItem(pos=[0, 0, 0], color=color, size=size)
 
 def create_planets_objects(path, view):
     planets_list = get_planets(path)
