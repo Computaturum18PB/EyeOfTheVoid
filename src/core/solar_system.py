@@ -4,11 +4,11 @@ import numpy as np
 import math
 import pyqtgraph.opengl as gl
 from utils.solar_system import create_star, create_planets_objects, create_all_orbits, get_planets
+from core.environment_variables import SOLAR_SYSTEM_PATH
 
 class SolarSystem(QWidget):
     def __init__(self): 
         super().__init__()
-        self.path = "EyeOfTheVoid/src/data/solar_system.json"
         
         layout = QHBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
@@ -16,11 +16,11 @@ class SolarSystem(QWidget):
         self.view = gl.GLViewWidget()
         layout.addWidget(self.view)
 
-        sun = create_star(self.path)
+        sun = create_star(SOLAR_SYSTEM_PATH)
         self.view.addItem(sun)
 
-        self.planets_list = get_planets(self.path)
-        self.planets_data = create_planets_objects(self.path, self.view)
+        self.planets_list = get_planets(SOLAR_SYSTEM_PATH)
+        self.planets_data = create_planets_objects(SOLAR_SYSTEM_PATH, self.view)
              
         self.description = QTextEdit()
         self.description.setFixedWidth(300)
@@ -62,6 +62,27 @@ class SolarSystem(QWidget):
             planet_data["item"].setData(pos=[x, y, z])
             
     def create_description(self, index):
+        russian_block_list = ["Модельный", "Модельное", "Модельная", "Модельные"]
+        english_block_list = ["Model"]
         planet = self.planets_list[index]
-        for key in planet:
-            self.description.append(f"{key}: {planet[key]}")
+        description_lines = []
+        
+        for key, value in planet.items():
+            formatted_key = key.replace("_", " ")
+            if not(any(block in formatted_key for block in russian_block_list) | any(block in formatted_key for block in english_block_list)):
+                match value:
+                    case str() | int() | float():
+                        description_lines.append(f"{formatted_key}: {value}")
+                    case list():
+                        description_lines.append(f"{formatted_key}:")
+                        for item in value:
+                            description_lines.append(f"     {item}")
+                    case dict():
+                        description_lines.append(f"{formatted_key}:")
+                        for sub_key, sub_value in value.items():
+                            description_lines.append(f"     {sub_key}: {sub_value}")
+                    case _:
+                        description_lines.append("{UNKNOWN TYPE}")
+        text = "\n".join(description_lines)
+        
+        self.description.append(text)
