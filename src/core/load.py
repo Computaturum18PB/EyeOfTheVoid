@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QLabel, QProgressBar, QVBoxLayout, QWidget
+from PySide6.QtWidgets import QProgressBar, QVBoxLayout, QWidget
 from PySide6.QtCore import Qt
 
 class LoadWindow(QWidget):
@@ -12,11 +12,7 @@ class LoadWindow(QWidget):
         
         layout = QVBoxLayout()
         layout.setAlignment(Qt.AlignCenter)
-        
-        self.label = QLabel("Загрузка")
-        self.label.setAlignment(Qt.AlignCenter)
-        
-        layout.addWidget(self.label)
+
         layout.addWidget(self.progress)
         
         self.setLayout(layout)
