@@ -4,7 +4,7 @@ import numpy as np
 import math
 import pyqtgraph.opengl as gl
 from utils.solar_system import create_star, create_planets_objects, create_all_orbits, get_planets
-from core.environment_variables import SOLAR_SYSTEM_PATH
+from core.environment_variables import SOLAR_SYSTEM_PATH, RUSSIAN_BLOCK_LIST, ENGLISH_BLOCK_LIST, UNKNOWN_TYPE
 
 class SolarSystem(QWidget):
     def __init__(self): 
@@ -62,14 +62,12 @@ class SolarSystem(QWidget):
             planet_data["item"].setData(pos=[x, y, z])
             
     def create_description(self, index):
-        russian_block_list = ["Модельный", "Модельное", "Модельная", "Модельные"]
-        english_block_list = ["Model"]
         planet = self.planets_list[index]
         description_lines = []
         
         for key, value in planet.items():
             formatted_key = key.replace("_", " ")
-            if not(any(block in formatted_key for block in russian_block_list) | any(block in formatted_key for block in english_block_list)):
+            if not(any(block in formatted_key for block in RUSSIAN_BLOCK_LIST) | any(block in formatted_key for block in ENGLISH_BLOCK_LIST)):
                 match value:
                     case str() | int() | float():
                         description_lines.append(f"{formatted_key}: {value}")
@@ -82,7 +80,7 @@ class SolarSystem(QWidget):
                         for sub_key, sub_value in value.items():
                             description_lines.append(f"     {sub_key}: {sub_value}")
                     case _:
-                        description_lines.append("{UNKNOWN TYPE}")
+                        description_lines.append(UNKNOWN_TYPE)
         text = "\n".join(description_lines)
         
         self.description.append(text)

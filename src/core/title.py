@@ -3,6 +3,7 @@ from PySide6.QtGui import QFont
 from PySide6.QtCore import Slot
 from utils.data_reader import get_title_tab_data
 from utils.language_settings import lm
+from core.environment_variables import FONT_NAME_H1, FONT_SIZE_H1
 
 class Title(QWidget):
     def __init__(self, path_content_tabs):
@@ -12,7 +13,7 @@ class Title(QWidget):
         layout = QGridLayout()
         self.setLayout(layout)
         
-        title_font = QFont("Verdana", 70)
+        title_font = QFont(FONT_NAME_H1, FONT_SIZE_H1)
         title_font.setItalic(True)
         
         self.title = QLabel()

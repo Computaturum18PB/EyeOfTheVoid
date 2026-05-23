@@ -5,7 +5,7 @@ from core.solar_system import SolarSystem
 from core.title import Title
 from utils.data_reader import get_tab_name
 from utils.language_settings import lm
-from core.environment_variables import ICON_PATH, CONTENT_PATH
+from core.environment_variables import ICON_PATH, CONTENT_PATH, PROGRAMM_NAME
 
 class CoreWindow(QTabWidget):
     def __init__(self):
@@ -14,7 +14,7 @@ class CoreWindow(QTabWidget):
         list_tabs = get_tab_name(CONTENT_PATH)
         
         self.showMaximized()
-        self.setWindowTitle("Eye of the void")
+        self.setWindowTitle(PROGRAMM_NAME)
         self.setWindowIcon(QIcon(QPixmap(ICON_PATH)))
         
         self.title = Title(CONTENT_PATH)
