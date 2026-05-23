@@ -10,7 +10,7 @@ from core.environment_variables import ICON_PATH, CONTENT_PATH, PROGRAMM_NAME
 class CoreWindow(QTabWidget):
     def __init__(self):
         super().__init__()
-        
+                        
         list_tabs = get_tab_name(CONTENT_PATH)
         
         self.showMaximized()

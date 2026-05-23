@@ -71,14 +71,16 @@ class SolarSystem(QWidget):
                 match value:
                     case str() | int() | float():
                         description_lines.append(f"{formatted_key}: {value}")
-                    case list():
+                    case list():        
                         description_lines.append(f"{formatted_key}:")
                         for item in value:
-                            description_lines.append(f"     {item}")
+                            formatted_item = item.replace("_", " ")
+                            description_lines.append(f"     {formatted_item}")
                     case dict():
                         description_lines.append(f"{formatted_key}:")
                         for sub_key, sub_value in value.items():
-                            description_lines.append(f"     {sub_key}: {sub_value}")
+                            formatted_sub_key = sub_key.replace("_", " ")
+                            description_lines.append(f"     {formatted_sub_key}: {sub_value}")
                     case _:
                         description_lines.append(UNKNOWN_TYPE)
         text = "\n".join(description_lines)
