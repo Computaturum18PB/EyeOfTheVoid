@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QHBoxLayout, QWidget
+from PySide6.QtWidgets import QHBoxLayout, QWidget, QTextEdit
 from PySide6.QtCore import QTimer
 import numpy as np
 import math
@@ -19,7 +19,15 @@ class SolarSystem(QWidget):
         sun = create_star(self.path)
         self.view.addItem(sun)
 
+        self.planets_list = get_planets(self.path)
         self.planets_data = create_planets_objects(self.path, self.view)
+             
+        self.description = QTextEdit()
+        self.description.setFixedWidth(300)
+        self.description.setReadOnly(True)
+        layout.addWidget(self.description)
+        
+        self.create_description(0)
 
         orbits = create_all_orbits(self.planets_data)
         for orbit in orbits:
@@ -52,3 +60,8 @@ class SolarSystem(QWidget):
             x, y, z = self.get_planet_position(planet_data, planet_data["angle"])
 
             planet_data["item"].setData(pos=[x, y, z])
+            
+    def create_description(self, index):
+        planet = self.planets_list[index]
+        for key in planet:
+            self.description.append(f"{key}: {planet[key]}")
