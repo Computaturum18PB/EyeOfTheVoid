@@ -1,29 +1,37 @@
-from PySide6.QtWidgets import QTabWidget, QMenuBar, QMainWindow
+from PySide6.QtWidgets import QTabWidget, QMenuBar, QMainWindow, QToolBar
 from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtCore import Slot
 from core.solar_system import SolarSystem
 from core.title import Title
 from utils.data_reader import get_tab_name, get_menu_section_data
 from utils.language_settings import lm
+from utils.speed_settings import sp
 from core.environment_variables import ICON_PATH, CONTENT_PATH, PROGRAMM_NAME
 
 class CoreWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        
-        self.showMaximized()
+    
         self.setWindowTitle(PROGRAMM_NAME)
         self.setWindowIcon(QIcon(QPixmap(ICON_PATH)))
         
         self.menu = QMenuBar()
         self.setMenuBar(self.menu)
         
-        list_section_1 = get_menu_section_data(CONTENT_PATH, 1)
+        list_menu_section_1 = get_menu_section_data(CONTENT_PATH, 1)
         
-        self.language_menu = self.menu.addMenu(list_section_1[0])
+        self.language_menu = self.menu.addMenu(list_menu_section_1[0])
         
-        self.set_language = self.language_menu.addAction(list_section_1[1])
+        self.set_language = self.language_menu.addAction(list_menu_section_1[1])
         self.set_language.triggered.connect(lm.change_language)
+        
+        list_menu_section_2 = get_menu_section_data(CONTENT_PATH, 2)
+        
+        self.solar_system_menu = self.menu.addMenu(list_menu_section_2[0])
+        self.solar_system_menu.setEnabled(False)
+        
+        self.switch_speed = self.solar_system_menu.addAction(list_menu_section_2[1])
+        self.switch_speed.triggered.connect(sp.switch_speed)
         
         list_tabs = get_tab_name(CONTENT_PATH)
 
@@ -38,7 +46,18 @@ class CoreWindow(QMainWindow):
 
         lm.language_changed.connect(self.update_content)
         
+        self.tabs.currentChanged.connect(self.solar_system_active)
+        
         self.update_content()
+        
+        self.showMaximized()
+        
+    def solar_system_active(self, index):
+        match index:
+            case 0:
+                self.solar_system_menu.setEnabled(False)
+            case 1:
+                self.solar_system_menu.setEnabled(True)
     
     @Slot()
     def update_content(self):
@@ -49,6 +68,10 @@ class CoreWindow(QMainWindow):
         new_list_section_1 = get_menu_section_data(CONTENT_PATH, 1)
         self.language_menu.setTitle(new_list_section_1[0])
         self.set_language.setText(new_list_section_1[1])
+        
+        new_list_section_2 = get_menu_section_data(CONTENT_PATH, 2)
+        self.solar_system_menu.setTitle(new_list_section_2[0])
+        self.switch_speed.setText(new_list_section_2[1])
 
         for i in range(self.tabs.count()):
             widget = self.tabs.widget(i)

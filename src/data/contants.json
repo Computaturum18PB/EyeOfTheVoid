@@ -12,7 +12,10 @@
                 "Технические настройки",
                 "Сменить язык"
             ],
-            "section_2": []
+            "section_2": [
+                "Настройки солнечной системы",
+                "Изменить скорость"
+            ]
         }
     },
     "English": {
@@ -28,7 +31,10 @@
                 "Technical settings",
                 "Change language"
             ],
-            "section_2": []
+            "section_2": [
+                "Solar system settings",
+                "Change speed"
+            ]
         }
     }
 }

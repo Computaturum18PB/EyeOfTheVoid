@@ -18,5 +18,7 @@ FONT_NAME_H1 = "Verdana"
 FONT_SIZE_H1 = 30
 
 
-# Настройки симуляции
-NORMAL_SPEED = 1
+# Настройки скорости симуляции
+FAST_SPEED = 50
+NORMAL_SPEED = 100
+LOWER_SPEED = 150
