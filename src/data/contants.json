@@ -6,7 +6,14 @@
         ],
         "title": [
             "Приветствуем, ученые!"
-        ]
+        ],
+        "menu": {
+            "section_1": [
+                "Технические настройки",
+                "Сменить язык"
+            ],
+            "section_2": []
+        }
     },
     "English": {
         "tabs": [
@@ -15,7 +22,14 @@
         ],
         "title": [
             "Welcome, scientists!"
-        ]
+        ],
+        "menu": {
+            "section_1": [
+                "Technical settings",
+                "Change language"
+            ],
+            "section_2": []
+        }
     }
 }
 

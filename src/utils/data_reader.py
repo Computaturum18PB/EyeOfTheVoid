@@ -11,7 +11,6 @@ def get_tab_name(path):
         data = read_file(path)
     except FileNotFoundError:
         print("Файл не существует!")
-    
     list_tabs = data[lm.get_current_language()]["tabs"]
     return list_tabs
 
@@ -20,6 +19,17 @@ def get_title_tab_data(path):
         data = read_file(path)
     except FileNotFoundError:
         print("Файл не существует!")
-        
     list_data = data[lm.get_current_language()]["title"]
+    return list_data
+
+def get_menu_section_data(path, section):
+    try: 
+        data = read_file(path)
+    except FileNotFoundError:
+        print("Файл не существует!")
+    match section:
+        case 1:
+            list_data = data[lm.get_current_language()]["menu"]["section_1"]
+        case 2:
+            list_data = data[lm.get_current_language()]["menu"]["section_2"]
     return list_data
