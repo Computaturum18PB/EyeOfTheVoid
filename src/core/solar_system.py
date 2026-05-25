@@ -4,7 +4,7 @@ import math
 import pyqtgraph.opengl as gl
 from utils.solar_system import create_star, create_planets_objects, create_all_orbits, get_planets
 from utils.data_reader import get_buttons_data
-from core.environment_variables import SOLAR_SYSTEM_PATH, RUSSIAN_BLOCK_LIST, ENGLISH_BLOCK_LIST, UNKNOWN_TYPE, CONTENT_PATH
+from core.environment_variables import SOLAR_SYSTEM_PATH, RUSSIAN_BLOCK_LIST, ENGLISH_BLOCK_LIST, UNKNOWN_TYPE, CONTENT_PATH, MAXIMUM_NUMBER_OF_OBJECTS, CURRENT_NUMBER_OF_OBJECT
 
 class SolarSystem(QWidget):
     def __init__(self): 
@@ -28,10 +28,12 @@ class SolarSystem(QWidget):
         
         buttons_layout = QHBoxLayout()
         self.button_previous = QPushButton(self.buttons_data[1])
+        self.button_previous.pressed.connect(self.previous_button_press)
         buttons_layout.addWidget(self.button_previous)
         
         self.button_subsequent = QPushButton(self.buttons_data[0])
         buttons_layout.addWidget(self.button_subsequent)
+        self.button_subsequent.pressed.connect(self.subsequent_button_press)
         description_layout.addLayout(buttons_layout)
              
         self.description = QTextEdit()
@@ -40,7 +42,7 @@ class SolarSystem(QWidget):
         description_layout.addWidget(self.description)
         layout.addLayout(description_layout)
         
-        self.create_description(0)
+        self.create_description(CURRENT_NUMBER_OF_OBJECT)
 
         orbits = create_all_orbits(self.planets_data)
         for orbit in orbits:
@@ -117,10 +119,34 @@ class SolarSystem(QWidget):
         self.description.append(text)
         
     @Slot()
+    def previous_button_press(self):
+        global CURRENT_NUMBER_OF_OBJECT
+        global MAXIMUM_NUMBER_OF_OBJECTS
+        if (CURRENT_NUMBER_OF_OBJECT == 0):
+            CURRENT_NUMBER_OF_OBJECT = MAXIMUM_NUMBER_OF_OBJECTS
+        else:
+            CURRENT_NUMBER_OF_OBJECT -= 1
+        self.planets_list = get_planets(SOLAR_SYSTEM_PATH)
+        self.description.clear()
+        self.create_description(CURRENT_NUMBER_OF_OBJECT)
+        
+    @Slot()
+    def subsequent_button_press(self):
+        global CURRENT_NUMBER_OF_OBJECT
+        global MAXIMUM_NUMBER_OF_OBJECTS
+        if (CURRENT_NUMBER_OF_OBJECT == MAXIMUM_NUMBER_OF_OBJECTS):
+            CURRENT_NUMBER_OF_OBJECT = 0
+        else:
+            CURRENT_NUMBER_OF_OBJECT += 1
+        self.planets_list = get_planets(SOLAR_SYSTEM_PATH)
+        self.description.clear()
+        self.create_description(CURRENT_NUMBER_OF_OBJECT)
+        
+    @Slot()
     def update_content(self):
         self.planets_list = get_planets(SOLAR_SYSTEM_PATH)
         self.description.clear()
-        self.create_description(0)
+        self.create_description(CURRENT_NUMBER_OF_OBJECT)
         
         self.buttons_data = get_buttons_data(CONTENT_PATH)
         self.button_previous.setText(self.buttons_data[1])
