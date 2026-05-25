@@ -22,8 +22,8 @@
             "Distance_in_million_km": 149.6,
             "Speed_light_in_minutes": 8.317
         },
-        "Planets": {
-            "Mercury": {
+        "Planets": [
+            {
                 "Name": "Mercury",
                 "Composition": {
                     "Iron_percent": 70.0,
@@ -45,7 +45,7 @@
                 "Orbit_inclination_degrees": 7.0,
                 "Satellites": []
             },
-            "Venus": {
+            {
                 "Name": "Venus",
                 "Composition": {
                     "Iron_percent": 65.0,
@@ -65,7 +65,7 @@
                 "Orbit_inclination_degrees": 3.39,
                 "Satellites": []
             },
-            "Earth": {
+            {
                 "Name": "Earth",
                 "Composition": {
                     "Iron_percent": 32.0,
@@ -94,7 +94,7 @@
                     }
                 ]
             },
-            "Mars": {
+            {
                 "Name": "Mars",
                 "Composition": {
                     "Iron_percent": 18.0,
@@ -127,7 +127,7 @@
                     }
                 ]
             },
-            "Jupiter": {
+            {
                 "Name": "Jupiter",
                 "Composition": {
                     "Hydrogen_percent": 75.0,
@@ -171,7 +171,7 @@
                     }
                 ]
             },
-            "Saturn": {
+            {
                 "Name": "Saturn",
                 "Composition": {
                     "Hydrogen_percent": 80.0,
@@ -215,7 +215,7 @@
                     }
                 ]
             },
-            "Uranus": {
+            {
                 "Name": "Uranus",
                 "Composition": {
                     "Hydrogen_percent": 54.0,
@@ -253,7 +253,7 @@
                     }
                 ]
             },
-            "Neptune": {
+            {
                 "Name": "Neptune",
                 "Composition": {
                     "Hydrogen_percent": 50.0,
@@ -285,7 +285,7 @@
                     }
                 ]
             }
-        }
+        ]
     },
     "Русский": {
         "Звезда": {

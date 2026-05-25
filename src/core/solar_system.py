@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QHBoxLayout, QWidget, QTextEdit
-from PySide6.QtCore import QTimer
+from PySide6.QtCore import QTimer, Slot
 import numpy as np
 import math
 import pyqtgraph.opengl as gl
@@ -102,3 +102,9 @@ class SolarSystem(QWidget):
         
         text = "\n".join(description_lines)
         self.description.append(text)
+        
+    @Slot()
+    def update_content(self):
+        self.planets_list = get_planets(SOLAR_SYSTEM_PATH)
+        self.description.clear()
+        self.create_description(0)

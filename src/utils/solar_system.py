@@ -67,7 +67,7 @@ def create_planets_objects(path, view):
                 eccentricity = planet["Эксцентриситет_орбиты"]
                 inclination = math.radians(planet["Наклон_орбиты_градусов"])
                 speed = planet["Модельная_скорость"]
-                color = planet.get("Модельный_цвет", (0.3, 0.6, 1.0, 1.0))
+                color = planet.get("Модельный_цвет")
             case "English":
                 name = planet["Name"]
                 orbit_radius = planet["Model_orbit_radius"]
@@ -75,7 +75,7 @@ def create_planets_objects(path, view):
                 eccentricity = planet["Orbit_eccentricity"]
                 inclination = math.radians(planet["Orbit_inclination_degrees"])
                 speed = planet["Model_speed"]
-                color = planet.get("Model_color", (0.3, 0.6, 1.0, 1.0))
+                color = planet.get("Model_color")
 
         angle = random.uniform(0, 2 * math.pi)
 
