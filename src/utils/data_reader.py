@@ -33,3 +33,11 @@ def get_menu_section_data(path, section):
         case 2:
             list_data = data[lm.get_current_language()]["menu"]["section_2"]
     return list_data
+
+def get_buttons_data(path):
+    try:
+        data = read_file(path)
+    except FileExistsError:
+        print("Файл не существует!")
+    list_data = data[lm.get_current_language()]["buttons"]
+    return list_data

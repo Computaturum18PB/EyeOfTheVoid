@@ -1,10 +1,10 @@
-from PySide6.QtWidgets import QHBoxLayout, QWidget, QTextEdit
+from PySide6.QtWidgets import QHBoxLayout, QVBoxLayout, QWidget, QTextEdit, QPushButton
 from PySide6.QtCore import QTimer, Slot
-import numpy as np
 import math
 import pyqtgraph.opengl as gl
 from utils.solar_system import create_star, create_planets_objects, create_all_orbits, get_planets
-from core.environment_variables import SOLAR_SYSTEM_PATH, RUSSIAN_BLOCK_LIST, ENGLISH_BLOCK_LIST, UNKNOWN_TYPE
+from utils.data_reader import get_buttons_data
+from core.environment_variables import SOLAR_SYSTEM_PATH, RUSSIAN_BLOCK_LIST, ENGLISH_BLOCK_LIST, UNKNOWN_TYPE, CONTENT_PATH
 
 class SolarSystem(QWidget):
     def __init__(self): 
@@ -21,11 +21,24 @@ class SolarSystem(QWidget):
 
         self.planets_list = get_planets(SOLAR_SYSTEM_PATH)
         self.planets_data = create_planets_objects(SOLAR_SYSTEM_PATH, self.view)
+                 
+        description_layout = QVBoxLayout()
+        
+        self.buttons_data = get_buttons_data(CONTENT_PATH)
+        
+        buttons_layout = QHBoxLayout()
+        self.button_previous = QPushButton(self.buttons_data[1])
+        buttons_layout.addWidget(self.button_previous)
+        
+        self.button_subsequent = QPushButton(self.buttons_data[0])
+        buttons_layout.addWidget(self.button_subsequent)
+        description_layout.addLayout(buttons_layout)
              
         self.description = QTextEdit()
         self.description.setFixedWidth(300)
         self.description.setReadOnly(True)
-        layout.addWidget(self.description)
+        description_layout.addWidget(self.description)
+        layout.addLayout(description_layout)
         
         self.create_description(0)
 
@@ -108,3 +121,7 @@ class SolarSystem(QWidget):
         self.planets_list = get_planets(SOLAR_SYSTEM_PATH)
         self.description.clear()
         self.create_description(0)
+        
+        self.buttons_data = get_buttons_data(CONTENT_PATH)
+        self.button_previous.setText(self.buttons_data[1])
+        self.button_subsequent.setText(self.buttons_data[0])

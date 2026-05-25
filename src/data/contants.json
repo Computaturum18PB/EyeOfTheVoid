@@ -16,7 +16,11 @@
                 "Настройки солнечной системы",
                 "Изменить скорость"
             ]
-        }
+        },
+        "buttons": [
+                "Следующий объект",
+                "Предыдущий объект"
+        ]
     },
     "English": {
         "tabs": [
@@ -35,7 +39,11 @@
                 "Solar system settings",
                 "Change speed"
             ]
-        }
+        },
+        "buttons": [
+            "Next item", 
+            "Previous item"
+        ]
     }
 }
 
