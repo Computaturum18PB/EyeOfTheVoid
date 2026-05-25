@@ -2,6 +2,7 @@ from PySide6.QtWidgets import QHBoxLayout, QVBoxLayout, QWidget, QTextEdit, QPus
 from PySide6.QtCore import QTimer, Slot
 import math
 import pyqtgraph.opengl as gl
+from utils.speed_settings import sp
 from utils.solar_system import create_star, create_planets_objects, create_all_orbits, get_planets
 from utils.data_reader import get_buttons_data
 from core.environment_variables import SOLAR_SYSTEM_PATH, RUSSIAN_BLOCK_LIST, ENGLISH_BLOCK_LIST, UNKNOWN_TYPE, CONTENT_PATH, MAXIMUM_NUMBER_OF_OBJECTS, CURRENT_NUMBER_OF_OBJECT
@@ -50,7 +51,7 @@ class SolarSystem(QWidget):
 
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_planets)
-        self.timer.start(16)
+        self.timer.start(sp.get_current_speed())
     
     def get_planet_position(self, planet_data, angle):
         a = planet_data["orbit_radius"]
@@ -151,3 +152,9 @@ class SolarSystem(QWidget):
         self.buttons_data = get_buttons_data(CONTENT_PATH)
         self.button_previous.setText(self.buttons_data[1])
         self.button_subsequent.setText(self.buttons_data[0])
+        
+        self.timer.setInterval(sp.get_current_speed())
+        
+    @Slot()
+    def change_speed(self):
+        self.timer.setInterval(sp.get_current_speed())

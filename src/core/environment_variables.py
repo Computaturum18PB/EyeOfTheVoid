@@ -19,9 +19,9 @@ FONT_SIZE_H1 = 30
 
 
 # Настройки скорости симуляции
-FAST_SPEED = 50
-NORMAL_SPEED = 100
-LOWER_SPEED = 150
+FAST_SPEED = 1
+NORMAL_SPEED = 20
+LOWER_SPEED = 40
 
 
 # Параметры солнечной системы

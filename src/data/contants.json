@@ -14,7 +14,9 @@
             ],
             "section_2": [
                 "Настройки солнечной системы",
-                "Изменить скорость"
+                "Изменить скорость",
+                "Увеличить скорость",
+                "Уменьшить скорость"
             ]
         },
         "buttons": [
@@ -37,7 +39,9 @@
             ],
             "section_2": [
                 "Solar system settings",
-                "Change speed"
+                "Change speed",
+                "Increase speed",
+                "Decrease speed"
             ]
         },
         "buttons": [
