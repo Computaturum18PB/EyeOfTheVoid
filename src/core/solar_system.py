@@ -61,28 +61,44 @@ class SolarSystem(QWidget):
 
             planet_data["item"].setData(pos=[x, y, z])
             
+    def format_value(self, value, indent=0):
+        lines = []
+        spaces = " " * indent
+        
+        match value:
+            case str() | int() | float():
+                lines.append(f"{spaces}{value}")    
+            case list():
+                for item in value:
+                    lines.extend(self.format_value(item, indent + 4))
+            case dict():
+                for k, v in value.items():
+                    formatted_k = k.replace("_", " ")
+                    if isinstance(v, (str, int, float)):
+                        lines.append(f"{spaces}{formatted_k}: {v}")
+                    else:
+                        lines.append(f"{spaces}{formatted_k}:")
+                        lines.extend(self.format_value(v, indent + 4))        
+            case _:
+                lines.append(f"{spaces}{UNKNOWN_TYPE}")
+        return lines
+
     def create_description(self, index):
         planet = self.planets_list[index]
         description_lines = []
         
         for key, value in planet.items():
             formatted_key = key.replace("_", " ")
-            if not(any(block in formatted_key for block in RUSSIAN_BLOCK_LIST) | any(block in formatted_key for block in ENGLISH_BLOCK_LIST)):
-                match value:
-                    case str() | int() | float():
-                        description_lines.append(f"{formatted_key}: {value}")
-                    case list():        
-                        description_lines.append(f"{formatted_key}:")
-                        for item in value:
-                            formatted_item = item.replace("_", " ")
-                            description_lines.append(f"     {formatted_item}")
-                    case dict():
-                        description_lines.append(f"{formatted_key}:")
-                        for sub_key, sub_value in value.items():
-                            formatted_sub_key = sub_key.replace("_", " ")
-                            description_lines.append(f"     {formatted_sub_key}: {sub_value}")
-                    case _:
-                        description_lines.append(UNKNOWN_TYPE)
-        text = "\n".join(description_lines)
+
+            if any(block in formatted_key for block in RUSSIAN_BLOCK_LIST) or \
+            any(block in formatted_key for block in ENGLISH_BLOCK_LIST):
+                continue
+            
+            if isinstance(value, (str, int, float)):
+                description_lines.append(f"{formatted_key}: {value}")
+            else:
+                description_lines.append(f"{formatted_key}:")
+                description_lines.extend(self.format_value(value, 4))
         
+        text = "\n".join(description_lines)
         self.description.append(text)
