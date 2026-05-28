@@ -17,6 +17,8 @@ UNKNOWN_TYPE = "{?UNKNOWN TYPE?}"
 FONT_NAME_H1 = "Verdana"
 FONT_SIZE_H1 = 30
 
+FONT_NAME_NORMAL = "Verdana"
+FONT_SIZE_NORMAL = 10
 
 # Настройки скорости симуляции
 FAST_SPEED = 1
