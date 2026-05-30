@@ -65,6 +65,28 @@ def create_star(path):
             color = star_data["Model_color"]
     return gl.GLScatterPlotItem(pos=[0, 0, 0], color=color, size=size)
 
+def update_text_planet(self):
+    for planet_data in self.planets_data:
+        old_description = planet_data["description"]
+        self.view.removeItem(old_description)
+
+        new_description = gl.GLTextItem(
+            text=planet_data.get("name", "Planet"),
+            pos=np.array([0, 0, 0]),
+            font=QFont("Arial", 10)
+        )
+        self.view.addItem(new_description)
+        planet_data["description"] = new_description
+
+def update_names_planets(path, planets_data):
+    planets_list = get_planets(path)
+    for i, planet_data in enumerate(planets_data):
+        match lm.get_current_language():
+            case "English":
+                planet_data["name"] = planets_list[i]["Name"]
+            case "Русский":
+                planet_data["name"] = planets_list[i]["Название"]
+
 def create_planets_objects(path, view):
     planets_list = get_planets(path)
     planets_data = []
