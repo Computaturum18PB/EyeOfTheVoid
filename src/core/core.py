@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QLabel, QMenu, QTabWidget, QMenuBar, QStatusBar, QMainWindow
+from PySide6.QtWidgets import QLabel, QMenu, QTabWidget, QWidget, QMenuBar, QStatusBar, QMainWindow
 from PySide6.QtGui import QIcon, QPixmap, QAction
 from PySide6.QtCore import Slot
 from core.solar_system import SolarSystem
@@ -20,10 +20,15 @@ class CoreWindow(QMainWindow):
         
         self.status = QStatusBar()
         self.setStatusBar(self.status)
+        
+        self.app_status = QLabel()
+        self.status.addPermanentWidget(self.app_status)
+        
+        self.version = QLabel()
+        self.status.addPermanentWidget(self.version)
+        
         start_status = get_status_temporary(CONTENT_PATH, "start", 0)
         self.status.showMessage(start_status[0], start_status[1])
-        version_status = QLabel(get_status(CONTENT_PATH, "parameters")[0])
-        self.status.addPermanentWidget(version_status)
         
         list_menu_section_1 = get_menu_section_data(CONTENT_PATH, 1)
         
@@ -87,3 +92,12 @@ class CoreWindow(QMainWindow):
             widget = self.tabs.widget(i)
             if hasattr(widget, "update_content"):
                 widget.update_content()
+                
+        app_status = get_status(CONTENT_PATH, "statuses")[0]
+        self.app_status.setText(app_status)
+        
+        version = get_status(CONTENT_PATH, "parameters")[0]
+        self.version.setText(version)
+        
+        localizate = get_status_temporary(CONTENT_PATH, "actions", 0)
+        self.status.showMessage(localizate[0], localizate[1])

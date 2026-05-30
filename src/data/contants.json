@@ -28,6 +28,9 @@
             "start": [
                 ["Запуск приложения прошел успешно", 3000]
             ],
+            "actions": [
+                ["Смена языка", 2000]
+            ],
             "statuses": [
                 "Приложение работает корректно"
             ],
@@ -68,14 +71,18 @@
         ], 
         "status": {
             "start": [
-                "Application launch was successful", 2000
+                ["Application launch was successful", 3000]
+            ],
+            "actions": [
+                ["Change language", 2000]
             ],
             "statuses": [
-                "The application is running correctly"
+                "The application is working correctly"
             ],
-            "logs": [
-                "Logging", 0,
-                "Successful logging", 1000
+            "log": [
+                ["Logging", 0],
+                ["Successful logging", 1000],
+                ["Logging error", 2000]
             ],
             "parameters": [
                 "Version 1.0.0"

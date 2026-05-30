@@ -12,14 +12,12 @@ class Speed(QObject):
         if (Speed.__current_speed == FAST_SPEED): pass
         elif (Speed.__current_speed == NORMAL_SPEED): Speed.__current_speed = FAST_SPEED
         elif (Speed.__current_speed == LOWER_SPEED): Speed.__current_speed = NORMAL_SPEED
-        else: print("Неизвестная скорость")
                 
     @staticmethod
     def down_speed():
         if (Speed.__current_speed == FAST_SPEED): Speed.__current_speed = NORMAL_SPEED
         elif (Speed.__current_speed == NORMAL_SPEED): Speed.__current_speed = LOWER_SPEED
         elif (Speed.__current_speed == LOWER_SPEED): pass
-        else: print("Неизвестная скорость")
             
     @staticmethod
     def get_current_speed():
