@@ -4,7 +4,7 @@ from PySide6.QtGui import QFont
 import math
 import numpy as np
 import pyqtgraph.opengl as gl
-from utils.speed_settings import sp
+from utils.speed_master import sp
 from utils.solar_system import create_star, create_planets_objects, create_all_orbits, get_planets, get_star_name, update_names_planets, update_text_planet
 from utils.data_reader import get_buttons_data
 from core.environment_variables import SOLAR_SYSTEM_PATH, RUSSIAN_BLOCK_LIST, ENGLISH_BLOCK_LIST, UNKNOWN_TYPE, CONTENT_PATH, MAXIMUM_NUMBER_OF_OBJECTS, CURRENT_NUMBER_OF_OBJECT

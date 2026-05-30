@@ -5,7 +5,7 @@ from core.solar_system import SolarSystem
 from core.title import Title
 from utils.data_reader import get_tab_name, get_menu_section_data, get_status, get_status_temporary
 from utils.language_master import lm
-from utils.speed_settings import sp
+from utils.speed_master import sp
 from core.environment_variables import ICON_PATH, CONTENT_PATH, PROGRAMM_NAME
 
 class CoreWindow(QMainWindow):
