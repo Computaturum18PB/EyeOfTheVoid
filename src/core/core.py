@@ -1,10 +1,10 @@
-from PySide6.QtWidgets import QMenu, QTabWidget, QMenuBar, QMainWindow
+from PySide6.QtWidgets import QLabel, QMenu, QTabWidget, QMenuBar, QStatusBar, QMainWindow
 from PySide6.QtGui import QIcon, QPixmap, QAction
 from PySide6.QtCore import Slot
 from core.solar_system import SolarSystem
 from core.title import Title
-from utils.data_reader import get_tab_name, get_menu_section_data
-from utils.language_settings import lm
+from utils.data_reader import get_tab_name, get_menu_section_data, get_status, get_status_temporary
+from utils.language_master import lm
 from utils.speed_settings import sp
 from core.environment_variables import ICON_PATH, CONTENT_PATH, PROGRAMM_NAME
 
@@ -17,6 +17,13 @@ class CoreWindow(QMainWindow):
         
         self.menu = QMenuBar()
         self.setMenuBar(self.menu)
+        
+        self.status = QStatusBar()
+        self.setStatusBar(self.status)
+        start_status = get_status_temporary(CONTENT_PATH, "start", 0)
+        self.status.showMessage(start_status[0], start_status[1])
+        version_status = QLabel(get_status(CONTENT_PATH, "parameters")[0])
+        self.status.addPermanentWidget(version_status)
         
         list_menu_section_1 = get_menu_section_data(CONTENT_PATH, 1)
         

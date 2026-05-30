@@ -2,7 +2,7 @@ from PySide6.QtWidgets import QGridLayout, QLabel, QWidget
 from PySide6.QtGui import QFont, Qt
 from PySide6.QtCore import Slot
 from utils.data_reader import get_title_tab_data
-from utils.language_settings import lm
+from utils.language_master import lm
 from core.environment_variables import FONT_NAME_H1, FONT_SIZE_H1, FONT_NAME_NORMAL, FONT_SIZE_NORMAL
 
 class Title(QWidget):

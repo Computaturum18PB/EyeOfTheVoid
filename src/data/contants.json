@@ -23,7 +23,23 @@
         "buttons": [
                 "Следующий объект",
                 "Предыдущий объект"
-        ]
+        ],
+        "status": {
+            "start": [
+                ["Запуск приложения прошел успешно", 3000]
+            ],
+            "statuses": [
+                "Приложение работает корректно"
+            ],
+            "log": [
+                ["Логирование", 0],
+                ["Успешное логирование", 1000],
+                ["Ошибка логирования", 2000]
+            ],
+            "parameters": [
+                "Версия 1.0.0"
+            ]
+        }
     },
     "English": {
         "tabs": [
@@ -49,7 +65,22 @@
         "buttons": [
             "Next item", 
             "Previous item"
-        ]
+        ], 
+        "status": {
+            "start": [
+                "Application launch was successful", 2000
+            ],
+            "statuses": [
+                "The application is running correctly"
+            ],
+            "logs": [
+                "Logging", 0,
+                "Successful logging", 1000
+            ],
+            "parameters": [
+                "Version 1.0.0"
+            ]
+        }
     }
 }
 

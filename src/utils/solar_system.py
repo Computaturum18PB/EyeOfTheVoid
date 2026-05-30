@@ -1,7 +1,7 @@
 import random
 
 from PySide6.QtGui import QFont
-from utils.language_settings import lm
+from utils.language_master import lm
 import json
 import pyqtgraph.opengl as gl
 import math
