@@ -1,5 +1,6 @@
 import random
 
+from PySide6.QtGui import QFont
 from utils.language_settings import lm
 import json
 import pyqtgraph.opengl as gl
@@ -20,6 +21,16 @@ def get_star(path):
             case "English":
                 star = data["English"]["Star"]
         return star
+    
+def get_star_name(path):
+    with open(path, "r", encoding="utf-8") as file:
+        data = json.load(file)
+        match lm.get_current_language():
+            case "Русский":
+                name = data["Русский"]["Звезда"]["Название"]
+            case "English":
+                name = data["English"]["Star"]["Name"]
+        return name
 
 def get_planets(path):
     with open(path, "r", encoding="utf-8") as file:
@@ -91,9 +102,17 @@ def create_planets_objects(path, view):
         )
         view.addItem(planet_item)
         
+        description_item = gl.GLTextItem(
+            text=name,
+            pos=np.array([x+7, y+7, z+7]),
+            font=QFont("Arial", 10)
+        )
+        view.addItem(description_item)
+        
         planets_data.append({
             "name": name,
             "item": planet_item,
+            "description": description_item,
             "orbit_radius": orbit_radius,
             "eccentricity": eccentricity,
             "inclination": inclination,

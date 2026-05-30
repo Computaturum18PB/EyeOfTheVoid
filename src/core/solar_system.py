@@ -1,9 +1,11 @@
 from PySide6.QtWidgets import QHBoxLayout, QVBoxLayout, QWidget, QTextEdit, QPushButton
 from PySide6.QtCore import QTimer, Slot
+from PySide6.QtGui import QFont
 import math
+import numpy as np
 import pyqtgraph.opengl as gl
 from utils.speed_settings import sp
-from utils.solar_system import create_star, create_planets_objects, create_all_orbits, get_planets
+from utils.solar_system import create_star, create_planets_objects, create_all_orbits, get_planets, get_star_name
 from utils.data_reader import get_buttons_data
 from core.environment_variables import SOLAR_SYSTEM_PATH, RUSSIAN_BLOCK_LIST, ENGLISH_BLOCK_LIST, UNKNOWN_TYPE, CONTENT_PATH, MAXIMUM_NUMBER_OF_OBJECTS, CURRENT_NUMBER_OF_OBJECT
 
@@ -20,8 +22,12 @@ class SolarSystem(QWidget):
         sun = create_star(SOLAR_SYSTEM_PATH)
         self.view.addItem(sun)
 
+        self.sun_name = get_star_name(SOLAR_SYSTEM_PATH)
         self.planets_list = get_planets(SOLAR_SYSTEM_PATH)
-        self.planets_data = create_planets_objects(SOLAR_SYSTEM_PATH, self.view)
+        self.planets_data = create_planets_objects(SOLAR_SYSTEM_PATH, self.view) 
+                
+        self.sun_description = gl.GLTextItem(text=self.sun_name, pos=np.array([7, 7, 7]), font=QFont("Arial", 15))
+        self.view.addItem(self.sun_description)
                  
         description_layout = QVBoxLayout()
         
@@ -76,6 +82,7 @@ class SolarSystem(QWidget):
             x, y, z = self.get_planet_position(planet_data, planet_data["angle"])
 
             planet_data["item"].setData(pos=[x, y, z])
+            planet_data["description"].setData(pos=np.array([x, y, z]))
             
     def format_value(self, value, indent=0):
         lines = []
@@ -145,6 +152,11 @@ class SolarSystem(QWidget):
         
     @Slot()
     def update_content(self):
+        self.sun_name = get_star_name(SOLAR_SYSTEM_PATH)
+        self.view.removeItem(self.sun_description)
+        self.sun_description = gl.GLTextItem(text= self.sun_name, pos=np.array([7, 7, 7]), font=QFont("Arial", 15))
+        self.view.addItem(self.sun_description)
+
         self.planets_list = get_planets(SOLAR_SYSTEM_PATH)
         self.description.clear()
         self.create_description(CURRENT_NUMBER_OF_OBJECT)
