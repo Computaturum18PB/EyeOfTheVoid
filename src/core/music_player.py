@@ -3,7 +3,7 @@ from PySide6.QtWidgets import QHBoxLayout, QPushButton, QWidget, QVBoxLayout, QF
 from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
 from PySide6.QtCore import QUrl
 from utils.data_reader import get_player_state
-from core.environment_variables import CONTENT_PATH, MUSIC_1_PATH, MUSIC_2_PATH, MUSIC_3_PATH, MUSIC_4_PATH, MUSIC_5_PATH
+from core.environment_variables import CONTENT_PATH, MUSIC_1_PATH, MUSIC_2_PATH, MUSIC_3_PATH, MUSIC_4_PATH, MUSIC_5_PATH, DIALOG_CHOOSE_MUSIC_FILE
 
 class MediaPlayer(QWidget):
     def __init__(self):
@@ -66,7 +66,7 @@ class MediaPlayer(QWidget):
         right_layout.addLayout(controls)
         
         splitter.addWidget(right_panel)
-        splitter.setSizes([300, 400])
+        splitter.setSizes([100, 400])
 
         self.update_music_list()
 
@@ -85,7 +85,7 @@ class MediaPlayer(QWidget):
     
     def add_music(self):        
         files, _ = QFileDialog.getOpenFileNames(
-            self, "Выберите музыкальные файлы", "",
+            self, DIALOG_CHOOSE_MUSIC_FILE, "",
             "Audio Files (*.mp3);;All Files (*.*)"
         )
         

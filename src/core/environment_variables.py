@@ -1,6 +1,8 @@
 # Системные переменные 
 PROGRAMM_NAME = "Eye of the void"
-
+DIALOG_LOADING = "Loading"
+DIALOG_CHOOSE_MUSIC_FILE = "Select music files"
+DIALOG_AUTORIZATION = "Authorization"
 
 # Пути к системным локальным файлам
 ICON_PATH = "src/core/assets/images/icon.ico"
