@@ -3,6 +3,7 @@ from PySide6.QtGui import QIcon, QPixmap, QAction
 from PySide6.QtCore import Slot
 from core.solar_system import SolarSystem
 from core.title import Title
+from core.music_player import MediaPlayer
 from utils.data_reader import get_tab_name, get_menu_section_data, get_status, get_status_temporary
 from utils.language_master import lm
 from utils.speed_master import sp
@@ -57,9 +58,11 @@ class CoreWindow(QMainWindow):
         
         self.title = Title(CONTENT_PATH)
         self.solar_system = SolarSystem()
+        self.music_player = MediaPlayer()
         
         self.tabs.addTab(self.title, list_tabs[0])
         self.tabs.addTab(self.solar_system, list_tabs[1])
+        self.tabs.addTab(self.music_player, list_tabs[2])
 
         lm.language_changed.connect(self.update_content)
         self.tabs.currentChanged.connect(self.solar_system_active)
@@ -78,6 +81,7 @@ class CoreWindow(QMainWindow):
         new_list_tabs = get_tab_name(CONTENT_PATH)
         self.tabs.setTabText(0, new_list_tabs[0])
         self.tabs.setTabText(1, new_list_tabs[1])
+        self.tabs.setTabText(2, new_list_tabs[2])
         
         new_list_section_1 = get_menu_section_data(CONTENT_PATH, 1)
         self.language_menu.setTitle(new_list_section_1[0])

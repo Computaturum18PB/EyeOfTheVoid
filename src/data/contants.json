@@ -2,7 +2,8 @@
     "Русский": {
         "tabs": [
             "Меню",
-            "Солнечная система"
+            "Солнечная система",
+            "Музыкальный плеер"
         ],
         "title": [
             "Приветствуем, ученые!",
@@ -47,7 +48,8 @@
     "English": {
         "tabs": [
             "Menu",
-            "Solar system"
+            "Solar system",
+            "Music player"
         ],
         "title": [
             "Welcome, scientists!",
