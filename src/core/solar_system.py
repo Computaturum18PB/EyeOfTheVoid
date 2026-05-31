@@ -7,7 +7,7 @@ import pyqtgraph.opengl as gl
 from utils.speed_master import sp
 from utils.solar_system import create_star, create_planets_objects, create_all_orbits, get_planets, get_star_name, update_names_planets, update_text_planet
 from utils.data_reader import get_buttons_data
-from core.environment_variables import SOLAR_SYSTEM_PATH, RUSSIAN_BLOCK_LIST, ENGLISH_BLOCK_LIST, UNKNOWN_TYPE, CONTENT_PATH, MAXIMUM_NUMBER_OF_OBJECTS, CURRENT_NUMBER_OF_OBJECT
+from core.environment_variables import SOLAR_SYSTEM_PATH, RUSSIAN_BLOCK_LIST, ENGLISH_BLOCK_LIST, UNKNOWN_TYPE, CONTENT_PATH, MAXIMUM_NUMBER_OF_OBJECTS, CURRENT_NUMBER_OF_OBJECT, FONT_NAME_NORMAL, FONT_SIZE_NORMAL
 
 class SolarSystem(QWidget):
     def __init__(self): 
@@ -26,7 +26,7 @@ class SolarSystem(QWidget):
         self.planets_list = get_planets(SOLAR_SYSTEM_PATH)
         self.planets_data = create_planets_objects(SOLAR_SYSTEM_PATH, self.view) 
                 
-        self.sun_description = gl.GLTextItem(text=self.sun_name, pos=np.array([7, 7, 7]), font=QFont("Arial", 15))
+        self.sun_description = gl.GLTextItem(text=self.sun_name, pos=np.array([7, 7, 7]), font=QFont(FONT_NAME_NORMAL, FONT_SIZE_NORMAL))
         self.view.addItem(self.sun_description)
         
         update_names_planets(SOLAR_SYSTEM_PATH, self.planets_data)
@@ -156,7 +156,7 @@ class SolarSystem(QWidget):
     def update_content(self):
         self.sun_name = get_star_name(SOLAR_SYSTEM_PATH)
         self.view.removeItem(self.sun_description)
-        self.sun_description = gl.GLTextItem(text=self.sun_name, pos=np.array([7, 7, 7]), font=QFont("Arial", 15))
+        self.sun_description = gl.GLTextItem(text=self.sun_name, pos=np.array([7, 7, 7]), font=QFont(FONT_NAME_NORMAL, FONT_SIZE_NORMAL))
         self.view.addItem(self.sun_description)
 
         update_names_planets(SOLAR_SYSTEM_PATH, self.planets_data)
