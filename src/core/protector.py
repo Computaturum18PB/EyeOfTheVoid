@@ -1,4 +1,7 @@
-from PySide6.QtWidgets import QWizard, QWizardPage, QVBoxLayout, QLabel, QRadioButton, QLineEdit
+from PySide6.QtWidgets import QWizard, QWizardPage, QVBoxLayout, QLabel, QRadioButton, QLineEdit, QMessageBox
+import os
+
+USERS_FOLDER_PATH = "src/users"
 
 class ChoicePage(QWizardPage):
     def __init__(self):
@@ -42,11 +45,29 @@ class LoginPage(QWizardPage):
         
         self.registerField("login_username", self.username)
         self.registerField("login_password", self.password)
+    
+    def validatePage(self):
+        username = self.username.text()
+        password = self.password.text()
+        
+        if not username or not password:
+            QMessageBox.warning(self, "Error", "Fill all fields!")
+            return False
+        
+        folder_path = USERS_FOLDER_PATH + "/" + username
+        
+        if not os.path.exists(folder_path):
+            QMessageBox.warning(self, "Login error", "Incorrect username! Try again")
+            return False
+        
+        # Проверка пароля
+                
+        return True
 
 class RegisterPage(QWizardPage):
     def __init__(self):
         super().__init__()
-        self.setTitle("Regiseter")
+        self.setTitle("Register")
         self.setSubTitle("Create new account")
         
         layout = QVBoxLayout()
@@ -69,12 +90,41 @@ class RegisterPage(QWizardPage):
         
         self.registerField("register_username", self.username)
         self.registerField("register_password", self.password)
+    
+    def validatePage(self):
+        username = self.username.text()
+        password = self.password.text()
+        confirm = self.confirm.text()
+        
+        if not username or not password:
+            QMessageBox.warning(self, "Error", "Fill all fields!")
+            return False
+        
+        if password != confirm:
+            QMessageBox.warning(self, "Error", "Passwords do not match!")
+            return False
+        
+        if len(password) < 6:
+            QMessageBox.warning(self, "Error", "Password must be at least 6 characters!")
+            return False
+        
+        folder_path = USERS_FOLDER_PATH + "/" + username
+        
+        if os.path.exists(folder_path):
+            QMessageBox.warning(self, "Error", "User already exists!")
+            return False
+
+        os.makedirs(folder_path)
+        
+        # Создание файла с паролем
+        
+        return True
 
 class ProtectorWindow(QWizard):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Authorization")
-        self.setWizardStyle(QWizard.ModernStyle)        
+        self.setWizardStyle(QWizard.ModernStyle)  
 
         self.choice_page = ChoicePage()
         self.login_page = LoginPage()
@@ -105,5 +155,11 @@ class ProtectorWindow(QWizard):
         else:
             username = self.field("register_username")
             password = self.field("register_password")
-        
+
         super().accept()
+    
+    def reject(self):
+        reply = QMessageBox.question(self, "Exit", "Are you sure you want to cancel?",QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        
+        if reply == QMessageBox.Yes:
+            super().reject()
