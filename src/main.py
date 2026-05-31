@@ -5,25 +5,18 @@ from core.protector import ProtectorWindow
 
 def main():
     app = QApplication([])
-    
-    load_first = LoadWindow()
-    load_first.show()
-    app.processEvents()
-    
+
     protector = ProtectorWindow()
     if not protector.exec():
-        load_first.close()
         return 
-    
-    load_first.close()
 
-    load_second = LoadWindow()
-    load_second.show()
+    load = LoadWindow()
+    load.show()
     app.processEvents()
 
     window = CoreWindow()
     
-    load_second.close()
+    load.close()
     window.show()
     app.exec()
 

@@ -1,4 +1,3 @@
-# utils/crypto_master.py
 import os
 import json
 from pathlib import Path
@@ -16,36 +15,45 @@ class CryptoMaster:
         user_folder = self.users_folder / username
         meta_file = user_folder / 'meta.json'
 
-        if meta_file.exists():
+        if not user_folder.exists():
+            user_folder.mkdir(parents=True)
+        
+        try:
+            key = Fernet.generate_key()
+            cipher = Fernet(key)
+            
+            encrypted_password = cipher.encrypt(password.encode())
+
+            meta_data = {
+                'key': key.decode(),
+                'password': encrypted_password.decode()
+            }
+            
+            with open(meta_file, 'w', encoding='utf-8') as f:
+                json.dump(meta_data, f, indent=2)
+            
+            return True
+            
+        except Exception as e:
+            print("Error key generate!", e)
             return False
-
-        key = Fernet.generate_key()
-        cipher = Fernet(key)
-
-        encrypted_password = cipher.encrypt(password.encode())
-        
-        auth_data = {
-            'key': key.decode(),
-            'password': encrypted_password.decode()
-        }
-        
-        with open(meta_file, 'w', encoding='utf-8') as f:
-            json.dump(auth_data, f, indent=2)
-
-        return True
-
     
     def check_password(self, username, password):
         user_folder = self.users_folder / username
         meta_file = user_folder / 'meta.json'
-
-        with open(meta_file, 'r', encoding='utf-8') as f:
-            meta_data = json.load(f)
         
-        key = meta_data['key'].encode()
-        cipher = Fernet(key)
-        stored_password = cipher.decrypt(meta_data['password'].encode()).decode()
-        
-        return stored_password == password
+        try:
+            with open(meta_file, 'r', encoding='utf-8') as f:
+                auth_data = json.load(f)
+            
+            key = auth_data['key'].encode()
+            cipher = Fernet(key)
+            stored_password = cipher.decrypt(auth_data['password'].encode()).decode()
+            
+            return stored_password == password
+            
+        except Exception:
+            print("Error check!")
+            return False
 
 cm = CryptoMaster()
