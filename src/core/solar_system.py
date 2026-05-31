@@ -5,7 +5,7 @@ import math
 import numpy as np
 import pyqtgraph.opengl as gl
 from utils.speed_master import sp
-from utils.solar_system import create_star, create_planets_objects, create_all_orbits, get_planets, get_star_name, update_names_planets, update_text_planet
+from utils.solar_system import create_star, create_planets_objects, create_all_orbits, get_planets, get_star_name, update_names_planets, update_satellites, update_text_planet
 from utils.data_reader import get_buttons_data
 from core.environment_variables import SOLAR_SYSTEM_PATH, RUSSIAN_BLOCK_LIST, ENGLISH_BLOCK_LIST, UNKNOWN_TYPE, CONTENT_PATH, MAXIMUM_NUMBER_OF_OBJECTS, CURRENT_NUMBER_OF_OBJECT, FONT_NAME_NORMAL, FONT_SIZE_NORMAL
 
@@ -24,7 +24,7 @@ class SolarSystem(QWidget):
 
         self.sun_name = get_star_name(SOLAR_SYSTEM_PATH)
         self.planets_list = get_planets(SOLAR_SYSTEM_PATH)
-        self.planets_data = create_planets_objects(SOLAR_SYSTEM_PATH, self.view) 
+        self.planets_data, self.satellites = create_planets_objects(SOLAR_SYSTEM_PATH, self.view) 
                 
         self.sun_description = gl.GLTextItem(text=self.sun_name, pos=np.array([7, 7, 7]), font=QFont(FONT_NAME_NORMAL, FONT_SIZE_NORMAL))
         self.view.addItem(self.sun_description)
@@ -80,12 +80,15 @@ class SolarSystem(QWidget):
     def update_planets(self):
         for planet_data in self.planets_data:
             planet_data["angle"] += planet_data["speed"]
-            
             x, y, z = self.get_planet_position(planet_data, planet_data["angle"])
-
             planet_data["item"].setData(pos=[x, y, z])
             planet_data["description"].setData(pos=np.array([x, y, z]))
-            
+            planet_data["x"] = x
+            planet_data["y"] = y
+            planet_data["z"] = z
+        
+        update_satellites(self.satellites, self.planets_data)
+        
     def format_value(self, value, indent=0):
         lines = []
         spaces = " " * indent

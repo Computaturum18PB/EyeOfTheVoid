@@ -1,11 +1,11 @@
 import random
-
 from PySide6.QtGui import QFont
 from utils.language_master import lm
 import json
 import pyqtgraph.opengl as gl
 import math
 import numpy as np
+from core.environment_variables import FONT_NAME_NORMAL, FONT_SIZE_NORMAL
 
 def read_file(path):
     with open(path, "r", encoding="utf-8") as file:
@@ -41,18 +41,63 @@ def get_planets(path):
             case "Русский":
                 list_planets = data["Русский"]["Планеты"]
         return list_planets
-    
-def get_satellites(path):
-    list_planets = get_planets(path)
-    list_satellites = []
+
+def create_satellite(sat_data, parent_planet_item, view):
     match lm.get_current_language():
         case "Русский":
-            for planet in list_planets:
-                list_satellites.append(planet["Спутники"])
+            name = sat_data["Название"]
+            radius = sat_data["Модельный_радиус"]
+            orbit_radius = sat_data["Модельный_радиус_орбиты"]
+            speed = sat_data["Скорость_км_с"] / 100
+            color = sat_data["Модельный_цвет"]
         case "English":
-            for planet in list_planets:
-                list_satellites.append(planet["Satellites"])
-    return list_satellites
+            name = sat_data["Name"]
+            radius = sat_data["Model_radius"]
+            orbit_radius = sat_data["Model_orbit_radius"]
+            speed = sat_data["Speed_kms"] / 100
+            color = sat_data["Model_color"]
+
+    sat_item = gl.GLScatterPlotItem(
+        pos=[0, 0, 0],
+        color=color,
+        size=radius
+    )
+    view.addItem(sat_item)
+
+    orbit_points = []
+    segments = 100
+    for i in range(segments + 1):
+        angle = 2 * math.pi * i / segments
+        x = orbit_radius * math.cos(angle)
+        z = orbit_radius * math.sin(angle)
+        orbit_points.append([x, 0, z])
+    
+    orbit_line = gl.GLLinePlotItem(
+        pos=np.array(orbit_points),
+        color=(0.6, 0.6, 0.6, 0.5),
+        width=1
+    )
+    view.addItem(orbit_line)
+
+    label = gl.GLTextItem(
+        text=name,
+        pos=np.array([0, 0, 0]),
+        font=QFont("Arial", 8),
+        color=(0.8, 0.8, 0.8, 1)
+    )
+    view.addItem(label)
+    
+    return {
+        "name": name,
+        "item": sat_item,
+        "orbit": orbit_line,
+        "label": label,
+        "parent": parent_planet_item,
+        "orbit_radius": orbit_radius,
+        "speed": speed,
+        "angle": random.uniform(0, 2 * math.pi),
+        "color": color
+    }
 
 def create_star(path):
     star_data = get_star(path)
@@ -90,7 +135,8 @@ def update_names_planets(path, planets_data):
 def create_planets_objects(path, view):
     planets_list = get_planets(path)
     planets_data = []
-    
+    all_satellites = []
+        
     for planet in planets_list:
         match lm.get_current_language():
             case "Русский":
@@ -100,7 +146,8 @@ def create_planets_objects(path, view):
                 eccentricity = planet["Эксцентриситет_орбиты"]
                 inclination = math.radians(planet["Наклон_орбиты_градусов"])
                 speed = planet["Модельная_скорость"]
-                color = planet.get("Модельный_цвет")
+                color = planet["Модельный_цвет"]
+                satellites_data = planet.get("Спутники", [])
             case "English":
                 name = planet["Name"]
                 orbit_radius = planet["Model_orbit_radius"]
@@ -108,7 +155,8 @@ def create_planets_objects(path, view):
                 eccentricity = planet["Orbit_eccentricity"]
                 inclination = math.radians(planet["Orbit_inclination_degrees"])
                 speed = planet["Model_speed"]
-                color = planet.get("Model_color")
+                color = planet["Model_color"]
+                satellites_data = planet.get("Satellites", [])
 
         angle = random.uniform(0, 2 * math.pi)
 
@@ -127,11 +175,11 @@ def create_planets_objects(path, view):
         description_item = gl.GLTextItem(
             text=name,
             pos=np.array([x+7, y+7, z+7]),
-            font=QFont("Arial", 10)
+            font=QFont(FONT_NAME_NORMAL, FONT_SIZE_NORMAL)
         )
         view.addItem(description_item)
         
-        planets_data.append({
+        planet_obj = {
             "name": name,
             "item": planet_item,
             "description": description_item,
@@ -141,10 +189,52 @@ def create_planets_objects(path, view):
             "speed": speed,
             "angle": angle,
             "color": color,
-            "size": size
-        })
-    
-    return planets_data
+            "size": size,
+            "satellites": [],
+            "x": x,
+            "y": y,
+            "z": z
+        }
+
+        for sat_data in satellites_data:
+            satellite = create_satellite(sat_data, planet_item, view)
+            planet_obj["satellites"].append(satellite)
+            all_satellites.append(satellite)
+        
+        planets_data.append(planet_obj)
+
+    return planets_data, all_satellites
+
+def update_satellites(satellites, planets_data):
+    for sat in satellites:
+        sat["angle"] += sat["speed"]
+        
+        parent = None
+        for planet in planets_data:
+            if planet["item"] is sat["parent"]:
+                parent = planet
+                break
+            
+        parent_x = parent["x"]
+        parent_y = parent["y"]
+        parent_z = parent["z"]
+
+        sat_x = parent_x + sat["orbit_radius"] * math.cos(sat["angle"])
+        sat_z = parent_z + sat["orbit_radius"] * math.sin(sat["angle"])
+
+        sat["item"].setData(pos=[sat_x, parent_y, sat_z])
+        
+        orbit_points = []
+        segments = 100
+        for i in range(segments + 1):
+            angle = 2 * math.pi * i / segments
+            x = parent_x + sat["orbit_radius"] * math.cos(angle)
+            z = parent_z + sat["orbit_radius"] * math.sin(angle)
+            orbit_points.append([x, parent_y, z])
+
+        sat["orbit"].setData(pos=np.array(orbit_points))
+
+        sat["label"].setData(pos=np.array([sat_x, parent_y, sat_z]))
 
 def create_planet_orbit(planet_data):
     a = planet_data["orbit_radius"]
