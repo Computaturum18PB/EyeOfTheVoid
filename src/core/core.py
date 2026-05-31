@@ -47,8 +47,8 @@ class CoreWindow(QMainWindow):
         self.increase_speed = QAction(list_menu_section_2[2], self)
         self.decrease_speed = QAction(list_menu_section_2[3], self)
         
-        self.increase_speed.triggered.connect(sp.up_speed)
-        self.decrease_speed.triggered.connect(sp.down_speed)
+        self.increase_speed.triggered.connect(sp.fast_speed)
+        self.decrease_speed.triggered.connect(sp.real_speed)
         
         self.solar_system_menu.addActions([self.increase_speed, self.decrease_speed])
         

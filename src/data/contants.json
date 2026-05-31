@@ -22,8 +22,8 @@
             "section_2": [
                 "Настройки солнечной системы",
                 "Изменить скорость",
-                "Увеличить скорость",
-                "Уменьшить скорость"
+                "Супер-скорость",
+                "Реалистичная скорость"
             ]
         },
         "buttons": [
@@ -46,7 +46,7 @@
                 ["Ошибка логирования", 2000]
             ],
             "parameters": [
-                "Версия 1.1.2"
+                "Версия 1.1.3"
             ]
         }
     },
@@ -73,8 +73,8 @@
             "section_2": [
                 "Solar system settings",
                 "Change speed",
-                "Increase speed",
-                "Decrease speed"
+                "Super speed",
+                "Realistic speed"
             ]
         },
         "buttons": [
@@ -97,7 +97,7 @@
                 ["Logging error", 2000]
             ],
             "parameters": [
-                "Version 1.1.2"
+                "Version 1.1.3"
             ]
         }
     }

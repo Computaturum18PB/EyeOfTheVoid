@@ -27,9 +27,8 @@ FONT_NAME_NORMAL = "Arial"
 FONT_SIZE_NORMAL = 15
 
 # Настройки скорости симуляции
-FAST_SPEED = 1
-NORMAL_SPEED = 20
-LOWER_SPEED = 40
+FAST_SPEED = 3
+NORMAL_SPEED = 35
 
 
 # Параметры солнечной системы
