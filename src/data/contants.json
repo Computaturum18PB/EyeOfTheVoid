@@ -9,6 +9,11 @@
             "Приветствуем, ученые!",
             "Мы рады видеть вас в нашем приложении. Мы постарались сделать его максимально удобным и функциональным. На данный момент наша программа предлагает следующие возможности: \n- Наблюдение за моделью солнечной системы; \n- Прочтение информации об объектах солнечной системы."
         ],
+        "player": [
+            "▶ Воспроизвести",
+            "⏹ Стоп",
+            "⏸ Пауза"
+        ],
         "menu": {
             "section_1": [
                 "Технические настройки",
@@ -54,6 +59,11 @@
         "title": [
             "Welcome, scientists!",
             "We are glad to see you in our app. We have tried to make it as convenient and functional as possible. At the moment, our program offers the following features: \n- Observation of the sun model; \n- Reading information about objects of the solar system."
+        ],
+        "player": [
+            "▶ Continue",
+            "⏹ Stop",
+            "⏸ Pause"
         ],
         "menu": {
             "section_1": [

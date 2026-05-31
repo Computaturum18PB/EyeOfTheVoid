@@ -42,3 +42,8 @@ def get_status_temporary(path, type, index):
     data = read_file(path)
     status_and_time = data[lm.get_current_language()]["status"][type][index]
     return status_and_time
+
+def get_player_state(path, index):
+    data = read_file(path)
+    state = data[lm.get_current_language()]["player"][index]
+    return state
