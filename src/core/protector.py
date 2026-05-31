@@ -1,5 +1,6 @@
 from PySide6.QtWidgets import QWizard, QWizardPage, QVBoxLayout, QLabel, QRadioButton, QLineEdit, QMessageBox
 import os
+from utils.crypto_master import cm
 
 USERS_FOLDER_PATH = "src/users"
 
@@ -60,7 +61,7 @@ class LoginPage(QWizardPage):
             QMessageBox.warning(self, "Login error", "Incorrect username! Try again")
             return False
         
-        # Проверка пароля
+        cm.check_password(username, password)
                 
         return True
 
@@ -116,7 +117,7 @@ class RegisterPage(QWizardPage):
 
         os.makedirs(folder_path)
         
-        # Создание файла с паролем
+        cm.create_user(username, password)
         
         return True
 
