@@ -29,13 +29,12 @@ class CryptoMaster:
                 'password': encrypted_password.decode()
             }
             
-            with open(meta_file, 'w', encoding='utf-8') as f:
-                json.dump(meta_data, f, indent=2)
+            with open(meta_file, 'w', encoding='utf-8') as file:
+                json.dump(meta_data, file, indent=2)
             
             return True
             
-        except Exception as e:
-            print("Error key generate!", e)
+        except Exception:
             return False
     
     def check_password(self, username, password):
@@ -43,8 +42,8 @@ class CryptoMaster:
         meta_file = user_folder / 'meta.json'
         
         try:
-            with open(meta_file, 'r', encoding='utf-8') as f:
-                auth_data = json.load(f)
+            with open(meta_file, 'r', encoding='utf-8') as file:
+                auth_data = json.load(file)
             
             key = auth_data['key'].encode()
             cipher = Fernet(key)
@@ -53,7 +52,6 @@ class CryptoMaster:
             return stored_password == password
             
         except Exception:
-            print("Error check!")
             return False
 
 cm = CryptoMaster()
