@@ -1,5 +1,7 @@
 from PySide6.QtWidgets import QWizard, QWizardPage, QVBoxLayout, QLabel, QRadioButton, QLineEdit, QMessageBox
+from core.environment_variables import ICON_PATH
 from utils.crypto_master import cm
+from PySide6.QtGui import QIcon, QPixmap
 
 class ChoicePage(QWizardPage):
     def __init__(self):
@@ -111,6 +113,7 @@ class RegisterPage(QWizardPage):
 class ProtectorWindow(QWizard):
     def __init__(self):
         super().__init__()
+        self.setWindowIcon(QIcon(QPixmap(ICON_PATH)))
         self.setWindowTitle("Authorization")
         self.setWizardStyle(QWizard.ModernStyle)  
 

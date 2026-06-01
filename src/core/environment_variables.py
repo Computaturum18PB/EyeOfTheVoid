@@ -1,4 +1,6 @@
 # Системные переменные 
+import os
+
 PROGRAMM_NAME = "Eye of the void"
 DIALOG_LOADING = "Loading"
 DIALOG_CHOOSE_MUSIC_FILE = "Select music files"
@@ -13,6 +15,7 @@ MUSIC_2_PATH = "src/core/assets/music/embedded_music_2.mp3"
 MUSIC_3_PATH = "src/core/assets/music/embedded_music_3.mp3"
 MUSIC_4_PATH = "src/core/assets/music/embedded_music_4.mp3"
 MUSIC_5_PATH = "src/core/assets/music/embedded_music_5.mp3"
+STYLES_PATH = "src/core/assets/styles/style.qss"
 
 # Закрытые для показа данные json файла модели
 RUSSIAN_BLOCK_LIST = ["Модельный", "Модельное", "Модельная", "Модельные"]
