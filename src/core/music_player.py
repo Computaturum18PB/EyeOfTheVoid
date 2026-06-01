@@ -24,31 +24,32 @@ class MediaPlayer(QWidget):
         left_panel = QWidget()
         left_layout = QVBoxLayout(left_panel)
         
-        left_layout.addWidget(QLabel("📋 Плейлист:"))
+        self.music_list_title = QLabel()
+        left_layout.addWidget(self.music_list_title)
         
         self.music_list = QListWidget()
         self.music_list.itemDoubleClicked.connect(self.play_selected_music)
         left_layout.addWidget(self.music_list)
         
-        add_music_button = QPushButton("➕ Добавить музыку")
-        add_music_button.clicked.connect(self.add_music)
-        left_layout.addWidget(add_music_button)
+        self.add_music_button = QPushButton()
+        self.add_music_button.clicked.connect(self.add_music)
+        left_layout.addWidget(self.add_music_button)
         
         splitter.addWidget(left_panel)
 
         right_panel = QWidget()
         right_layout = QVBoxLayout(right_panel)
 
-        self.current_music_label = QLabel("Музыка: Не выбрана")
+        self.current_music_label = QLabel()
         right_layout.addWidget(self.current_music_label)
         
         controls = QHBoxLayout()
         
-        self.previous_button = QPushButton("⏮")
+        self.previous_button = QPushButton()
         self.previous_button.clicked.connect(self.previous_music)
         controls.addWidget(self.previous_button)
         
-        self.next_button = QPushButton("⏭")
+        self.next_button = QPushButton()
         self.next_button.clicked.connect(self.next_music)
         controls.addWidget(self.next_button)
         
@@ -111,7 +112,7 @@ class MediaPlayer(QWidget):
     def update_music_label(self):
         music_name = os.path.basename(self.playlist[self.current_music_index])
         music_name = os.path.splitext(music_name)[0]
-        self.current_music_label.setText(f"🎵 Сейчас играет: {music_name}")
+        self.current_music_label.setText(get_player_state(CONTENT_PATH, 8) + music_name)
     
     def next_music(self):
         self.current_music_index = (self.current_music_index + 1) % len(self.playlist)
@@ -141,10 +142,26 @@ class MediaPlayer(QWidget):
         self.play_text = get_player_state(CONTENT_PATH, 0)
         self.pause_text = get_player_state(CONTENT_PATH, 2)
         self.stop_text = get_player_state(CONTENT_PATH, 1)
+        self.dont_choose = get_player_state(CONTENT_PATH, 3)
+        self.back = get_player_state(CONTENT_PATH, 4)
+        self.next = get_player_state(CONTENT_PATH, 5)
+        self.add = get_player_state(CONTENT_PATH, 6)
+        self.list = get_player_state(CONTENT_PATH, 7)
+        
+        self.music_list_title.setText(self.list)
+                
+        self.next_button.setText(self.next)
+        self.previous_button.setText(self.back)
+        
+        music_name = os.path.basename(self.playlist[self.current_music_index])
+        music_name = os.path.splitext(music_name)[0]
+        self.current_music_label.setText(get_player_state(CONTENT_PATH, 8) + music_name)
         
         self.stop_button.setText(self.stop_text)
+        self.add_music_button.setText(self.add)
         
         if self.player.playbackState() == QMediaPlayer.PlayingState:
             self.play_button.setText(self.pause_text)
         else:
             self.play_button.setText(self.play_text)
+            

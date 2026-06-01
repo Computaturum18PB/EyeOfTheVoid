@@ -7,12 +7,18 @@
         ],
         "title": [
             "Приветствуем, ученые!",
-            "Мы рады видеть вас в нашем приложении. Мы постарались сделать его максимально удобным и функциональным. На данный момент наша программа предлагает следующие возможности: \n- Наблюдение за моделью солнечной системы; \n- Прочтение информации об объектах солнечной системы."
+            "Мы рады видеть вас в нашем приложении. Мы постарались сделать его максимально удобным и функциональным. На данный момент наша программа предлагает следующие возможности: \n- Наблюдение за моделью солнечной системы; \n- Прочтение информации об объектах солнечной системы; \n- Медиасопровождение."
         ],
         "player": [
-            "▶ Воспроизвести",
-            "⏹ Стоп",
-            "⏸ Пауза"
+            "Воспроизвести",
+            "Стоп",
+            "Пауза",
+            "Музыка: Не выбрана",
+            "Предыдущий",
+            "Следующий",
+            "Добавить музыку",
+            "Плейлист:",
+            "Сейчас играет:"
         ],
         "menu": {
             "section_1": [
@@ -46,7 +52,7 @@
                 ["Ошибка логирования", 2000]
             ],
             "parameters": [
-                "Версия 1.1.3"
+                "Версия 1.1.4"
             ]
         }
     },
@@ -58,12 +64,18 @@
         ],
         "title": [
             "Welcome, scientists!",
-            "We are glad to see you in our app. We have tried to make it as convenient and functional as possible. At the moment, our program offers the following features: \n- Observation of the sun model; \n- Reading information about objects of the solar system."
+            "We are glad to see you in our app. We have tried to make it as convenient and functional as possible. At the moment, our program offers the following features: \n- Observation of the sun model; \n- Reading information about objects of the solar system; \n- Media coverage."
         ],
         "player": [
-            "▶ Continue",
-            "⏹ Stop",
-            "⏸ Pause"
+            "Continue",
+            "Stop",
+            "Pause",
+            "Music: Don't choose",
+            "Previous",
+            "Next",
+            "Add music",
+            "Playlist:",
+            "Now play:"
         ],
         "menu": {
             "section_1": [
@@ -97,7 +109,7 @@
                 ["Logging error", 2000]
             ],
             "parameters": [
-                "Version 1.1.3"
+                "Version 1.1.4"
             ]
         }
     }
